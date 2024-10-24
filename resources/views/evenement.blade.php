@@ -29,6 +29,12 @@
     <p>Dit is een privé evenement</p> 
     @endif
     @endauth
+
+    @if ($event->id === $user->id)
+        dit is mijn evenement
+    @else
+        dit is een ander zijn evenement
+    @endif
     </section>
     @include('_partials.navigation')
 </body>

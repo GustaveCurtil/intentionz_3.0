@@ -23,12 +23,14 @@ class PageController extends Controller
     public function event(Event $event)
     {
         $userId = auth()->guard()->id();
+        $user = User::where('id', auth()->guard()->id())->first();
+
         $savedEvent = Save::where('user_id', $userId)
         ->where('event_id', $event->id)->first();
 
         $event->saved = $savedEvent && $savedEvent->saved;
 
-        return view('evenement', ['event' => $event]);
+        return view('evenement', ['event' => $event, 'user' => $user]);
     }
 
     public function login()
