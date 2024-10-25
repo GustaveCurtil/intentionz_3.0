@@ -14,7 +14,8 @@ class Event extends Model
         'tijd',         // Time of the event
         'beschrijving', // Description of the event
         'foto_pad',         // Path to the event's image
-        'locatie_url',  // URL link to the location (like Google Maps)
+        'locatie_url',
+        'invitation_slug',  // URL link to the location (like Google Maps)
         'publiek',      // Boolean indicating if the event is public
         'zoom',         // Zoom level (optional range slider input)
         'horizontaal', // Left-right range input
@@ -35,6 +36,21 @@ class Event extends Model
     public function invitations()
     {
         return $this->hasMany(Event::class);
+    }
+
+    public function guests()
+    {
+        return $this->invitations();
+    }
+    
+    public function goingGuests()
+    {
+        return $this->invitations()->where('going', true);
+    }
+
+    public function notGoingGuests()
+    {
+        return $this->invitations()->where('going', false);
     }
 
     public function saves()

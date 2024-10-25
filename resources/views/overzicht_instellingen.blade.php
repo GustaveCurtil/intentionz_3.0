@@ -1,12 +1,11 @@
-
-@section('title', 'instellingen')
+@extends('_layouts.head')
 
 @section('head')
     <meta name="description" content="instellingen">
     <link rel="stylesheet" href="{{ asset('css/editor.css') }}">
 @endsection
 
-<body>
+@section('main')
     <h2>instellingen</h2>
     <form action="edit-password" method="post">
         @csrf
@@ -53,6 +52,5 @@
         <input type="checkbox" name="verwijder-account" id="verwijder-account"><label for="verwijder-account">ik ben zeker</label>
         <input type="submit" value="make it happen please!">
     </form>
-    @include('_partials.navigation')
-</body>
-</html>
+
+@endsection

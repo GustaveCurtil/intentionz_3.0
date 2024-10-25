@@ -51,6 +51,11 @@ class User extends Authenticatable
         return $this->hasMany(Event::class);
     }
 
+    public function invitations()
+{
+    return $this->hasMany(Invitation::class);
+}
+
     public function followers()
     {
         return $this->belongsToMany(User::class, 'contacts', 'followed_id', 'follower_id');

@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('invitations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            $table->string('user_name')->nullable();
+            $table->boolean('going')->nullable(); // Optional checkbox, defaults to false
             $table->timestamps();
         });
     }

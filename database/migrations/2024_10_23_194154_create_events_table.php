@@ -16,15 +16,17 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('titel'); // Required
             $table->string('locatie_naam'); // Required
+            $table->string('locatie_url')->nullable(); // Optional URL field
             $table->date('datum'); // Required
             $table->time('tijd'); // Required
             $table->text('beschrijving')->nullable(); // Required
             $table->string('foto_pad')->nullable(); // File upload (optional)
-            $table->string('locatie_url')->nullable(); // Optional URL field
             $table->integer('zoom')->default(100); // Optional, default to 100
             $table->integer('horizontaal')->default(50); // Optional, default to 50
             $table->integer('verticaal')->default(50); // Optional, default to 50
+            $table->string('invitation_slug')->unique()->nullable();           
             $table->boolean('publiek')->default(false); // Optional checkbox, defaults to false
+            $table->string('organisator')->nullable(); // Optional URL field
             $table->string('evenement_url')->nullable();
             $table->timestamps(); // Created at, updated at
         });

@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('saves', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('event_id')->constrained()->onDelete('cascade');   
+            $table->foreignId('event_id')->constrained()->onDelete('cascade');  
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
             $table->boolean('saved')->default(false); 
+            $table->boolean('publiek')->default(false); 
             $table->timestamps();
         });
     }

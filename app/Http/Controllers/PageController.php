@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Save;
 use App\Models\User;
 use App\Models\Event;
+use App\Models\Invitation;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -22,16 +23,69 @@ class PageController extends Controller
 
     public function event(Event $event)
     {
+        //zijt ge wel ingelogd?
         $userId = auth()->guard()->id();
         $user = User::where('id', auth()->guard()->id())->first();
 
-        $savedEvent = Save::where('user_id', $userId)
-        ->where('event_id', $event->id)->first();
+        //gaat het om een privé evenement?
+        if ($event->publiek) {
+            if ($user) {
+                //is het publiek event opgeslagen of niet?...
+                $savedEvent = Save::where('user_id', $userId)
+                ->where('event_id', $event->id)->first();
+                $event->saved = $savedEvent && $savedEvent->saved;
+            }
+            return view('evenement_publiek', ['event' => $event, 'user' => $user]);
+        } else {
 
-        $event->saved = $savedEvent && $savedEvent->saved;
+            if ($user) {
 
-        return view('evenement', ['event' => $event, 'user' => $user]);
+            } else {
+                dd('op link gedruk zonder slug, zonder ingelogd te zijn. hmm kan dit? Please stuur gustave.curtil@tutanota.com als je op deze pagina bent geraakt. Pagecontroller event()');
+            }
+        }
+
+        //wie komt er en wie niet?
+        return view('evenement_prive', ['event' => $event, 'user' => $user]);
     }
+
+    public function uitnodiging($slug)
+    {
+        //zijt ge wel ingelogd?
+        $userId = auth()->guard()->id();
+        $user = User::where('id', auth()->guard()->id())->first();
+
+        //welk event?
+        $event = Event::where('invitation_slug', $slug)->first();
+
+        //ben ik ingelogd?
+        if ($user) {
+
+            //voeg mij toe aan invitation lijst met user_id
+            //redirect mij naar event?
+
+        } else {
+
+            //voeg mij toe aan invitation lijst met user_name
+
+        }
+
+        //wie komt er en wie niet?
+        return view('evenement_prive', ['event' => $event, 'user' => $user]);
+    }
+
+    // public function uitnodiging($slug)
+    // {
+    //     $user = User::where('id', auth()->guard()->id())->first();
+    //     $event = Event::where('invitation_slug', $slug)->firstOrFail();
+    //     $invitations = Invitation::where('event_id', $event->id)->get();
+
+    //     // Optionally, assign filtered invitations back to the event object if needed
+    //     $event->setRelation('invitations', $invitations);
+
+    //     return view('uitnodiging', ['event' => $event, 'user' => $user]);
+
+    // }
 
     public function login()
     {
@@ -48,8 +102,7 @@ class PageController extends Controller
         $userId = auth()->guard()->id();
 
         //Door mij georganiseerde evenementen
-        $eventsMy = Event::where('publiek', false)
-        ->where('user_id', $userId)
+        $eventsMy = Event::where('user_id', $userId)
         ->with('user')
         ->get();
 

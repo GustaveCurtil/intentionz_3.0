@@ -5,6 +5,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\SaveController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\InvitationController;
 
 Route::get('/', [PageController::class, 'publiek'])->name('publiek');
 Route::get('/login', [PageController::class, 'login'])->name('login')->middleware('guest');
@@ -16,10 +17,14 @@ Route::get('/aanmaken', [PageController::class, 'aanmaken'])->name('aanmaken')->
 Route::get('/aanpassen', [PageController::class, 'aanpassen'])->name('aanpassen')->middleware('auth');
 Route::get('/contactenlijst', [PageController::class, 'contactenlijst'])->name('contactenlijst')->middleware('auth');
 
+Route::post('/create-event', [EventController::class, 'createEvent']);
+
 Route::get('/evenement/{event}', [PageController::class, 'event']);
 Route::post('/evenement/{event}/opslaan', [SaveController::class, 'saveEvent']);
 
-Route::post('/create-event', [EventController::class, 'createEvent']);
+Route::get('/uitnodiging/{invitation_slug}', [PageController::class, 'uitnodiging']);
+Route::post('/antwoorden/{event}', [InvitationController::class, 'antwoorden']);
+
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);

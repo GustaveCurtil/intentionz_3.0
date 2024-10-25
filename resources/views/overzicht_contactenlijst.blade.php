@@ -1,12 +1,11 @@
 @extends('_layouts.head')
 
-@section('title', 'overzicht')
-
-<body>
+@section('main')
     <h2>bestaande gebruikers</h2>
+    <p>(tijdelijke optie voor debugg'en enzo)</p>
     <section>
         @if ($users->isEmpty())
-        <p>Er zijn momenteel geen publieke evenementen.</p>
+        <p>er zijn momenteel geen users.</p>
         @else
         @foreach ($users as $user)
         <form action="volg/{{$user->id}}" method="post">
@@ -25,7 +24,7 @@
     <h2>contactenlijst</h2>
     <section>
         @if ($contacts->isEmpty())
-        <p>Er zijn momenteel geen publieke evenementen.</p>
+        <p>geen contacten, maar da's totaal niet nodig ook ni eigenlijk.</p>
         @else
         @foreach ($contacts as $contact)
         <form action="ontvolg/{{$contact->id}}" method="post">
@@ -37,6 +36,5 @@
         @endforeach
         @endif
     </section>
-    @include('_partials.navigation')
-</body>
-</html>
+
+@endsection

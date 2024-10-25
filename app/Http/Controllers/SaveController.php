@@ -31,8 +31,8 @@ class SaveController extends Controller
 
         if($eventSave->saved) {
             // return redirect()->back();  
-            return redirect('/overzicht');
         }
-        return redirect('/');
+
+        return redirect()->back();
     }
 }

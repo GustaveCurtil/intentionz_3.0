@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Event;
 use DateTime;
+use App\Models\Event;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Type\Integer;
 
@@ -44,9 +45,11 @@ class EventController extends Controller
         if ($request->hasFile('foto')) {
             $image = $request->file('foto');
             $newImageName = now()->format('YmdHis') . '-' . preg_replace('/[^a-zA-Z0-9_-]/', '_', $request->titel) . '.' . $request->foto->extension();
-            $path = $image->storeAs('images', $newImageName, 'public');
+            $path = $image->storeAs('posters', $newImageName, 'public');
             $incomingFields['foto_pad'] = $path;
         }
+        $slug = Str::random(5);
+        $incomingFields['invitation_slug'] = $slug;
         $incomingFields['publiek'] = $request->has('publiek') ? true : false;
         $incomingFields['user_id'] = auth()->guard()->id();
 

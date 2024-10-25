@@ -1,13 +1,11 @@
 @extends('_layouts.head')
 
-@section('title', 'aanmaken')
-
 @section('head')
 <link rel="stylesheet" href="{{ asset('css/poster.css') }}">
 <script src="{{ asset('js/editor.js') }}" defer></script>
 @endsection
 
-<body>
+@section('main')
     <h2>evenement aanmaken</h2>
     <figure id="voorvertoning"><img></img></figure>
     <form action="create-event" method="post" enctype="multipart/form-data">
@@ -35,7 +33,7 @@
     </form>
 
     @if ($errors->any())
-    <details><summary>foutmeldingen ({{ $errors->count() }})</summary>
+    <details><summary>foutmelding ({{ $errors->count() }})</summary>
         <ul>
             @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
@@ -44,6 +42,4 @@
     </details>
     @endif
 
-    @include('_partials.navigation')
-</body>
-</html>
+@endsection

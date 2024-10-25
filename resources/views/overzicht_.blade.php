@@ -1,8 +1,6 @@
 @extends('_layouts.head')
 
-@section('title', 'overzicht')
-
-<body>
+@section('main')
     <h2>jouw overzicht</h2>
     <section>
         @if ($events->isEmpty())
@@ -13,6 +11,5 @@
         @endforeach
         @endif
     </section>
-    @include('_partials.navigation')
-</body>
-</html>
+
+@endsection
