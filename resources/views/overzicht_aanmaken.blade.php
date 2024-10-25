@@ -1,7 +1,7 @@
 @extends('_layouts.head')
 
 @section('head')
-<link rel="stylesheet" href="{{ asset('css/poster.css') }}">
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <script src="{{ asset('js/editor.js') }}" defer></script>
 @endsection
 

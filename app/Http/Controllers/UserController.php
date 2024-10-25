@@ -104,7 +104,7 @@ class UserController extends Controller
     
     public function checkForInvitation($eventId, $koosnaam) {
         $user = User::where('id', auth()->guard()->id())->first();
-        $invitation = Invitation::where('event_id', $eventId)->where('user_name', $koosnaam);
+        $invitation = Invitation::where('event_id', $eventId)->where('user_name', $koosnaam)->first();
         if ($invitation) {
             $invitation->user_id = $user->id;
             $invitation->save();

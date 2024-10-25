@@ -9,7 +9,7 @@
     <section>
         <h2>{{ $event->titel }} (publiek)</h2>    
         <figure>
-            <img src="/storage/{{ $event->foto_pad }}" alt="" height="400px">
+            <img src="/storage/{{ $event->foto_pad }}" alt="poster voor het evenement:{{$event->titel}}" style="left: {{$event->horizontaal}}%; top: {{$event->verticaal}}%; transform: translate(-50%, -50%) scale({{ $event->zoom }}%);">
         </figure>
         <p>{{ $event->datum }} om {{ $event->tijd }}</p>
         <p>{{ $event->beschrijving }}</p>
