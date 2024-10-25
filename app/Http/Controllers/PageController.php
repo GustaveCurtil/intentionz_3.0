@@ -49,6 +49,15 @@ class PageController extends Controller
         return view('evenement_prive', ['event' => $event, 'user' => $user]);
     }
 
+    public function editor(Event $event) {
+
+        $user = User::where('id', auth()->guard()->id())->first();
+        if ($event->user_id === $user->id) {
+            return view('overzicht_editor', ['event' => $event, 'user' => $user] );    
+        }
+        return redirect('/');
+    }
+
     public function uitnodiging($slug)
     {
         //zijt ge wel ingelogd?

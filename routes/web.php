@@ -20,6 +20,7 @@ Route::get('/contactenlijst', [PageController::class, 'contactenlijst'])->name('
 Route::post('/create-event', [EventController::class, 'createEvent']);
 
 Route::get('/evenement/{event}', [PageController::class, 'event']);
+Route::get('/evenement/{event}/editor', [PageController::class, 'editor']);
 Route::post('/evenement/{event}/opslaan', [SaveController::class, 'saveEvent']);
 
 Route::get('/uitnodiging/{invitation_slug}', [PageController::class, 'uitnodiging']);

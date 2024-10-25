@@ -16,6 +16,13 @@
     </section>
     
     @auth
+
+    @if (isset($user) && $event->user_id === $user->id)
+
+    <a href="/evenement/{{ $event->id }}/editor">evenement aanpassen</a>
+    
+    @else
+
     <section>
         <form action="/evenement/{{ $event->id }}/opslaan" method="POST">
             @csrf
@@ -26,6 +33,7 @@
             @endif
         </form>
     </section>
+    @endif
     @endauth
 
 @endsection
