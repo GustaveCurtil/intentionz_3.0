@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Invitation;
 use Illuminate\Http\Request;
+use App\Http\Controllers\InvitationController;
 
 class UserController extends Controller
 {
@@ -31,9 +33,11 @@ class UserController extends Controller
         $user = User::create($userData);
 
         auth()->guard()->login($user);
-        
+        $this->checkForInvitation($request->eventId, $request->koosnaam);    
         return redirect('/');
     }
+
+
 
     public function login(Request $request)
     {
@@ -61,6 +65,8 @@ class UserController extends Controller
             $request->session()->regenerate();
             return redirect('/');
         } 
+
+        $this->checkForInvitation($request->eventId, $request->koosnaam);
 
         return redirect('/login');
     }
@@ -93,5 +99,15 @@ class UserController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    
+    public function checkForInvitation($eventId, $koosnaam) {
+        $user = User::where('id', auth()->guard()->id())->first();
+        $invitation = Invitation::where('event_id', $eventId)->where('user_name', $koosnaam);
+        if ($invitation) {
+            $invitation->user_id = $user->id;
+            $invitation->save();
+        }
     }
 }

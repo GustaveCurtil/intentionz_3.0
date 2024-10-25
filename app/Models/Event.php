@@ -35,12 +35,7 @@ class Event extends Model
 
     public function invitations()
     {
-        return $this->hasMany(Event::class);
-    }
-
-    public function guests()
-    {
-        return $this->invitations();
+        return $this->hasMany(Invitation::class, 'event_id');
     }
     
     public function goingGuests()

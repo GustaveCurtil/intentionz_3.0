@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use DateTime;
 use App\Models\Event;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Ramsey\Uuid\Type\Integer;
 
 class EventController extends Controller
 {

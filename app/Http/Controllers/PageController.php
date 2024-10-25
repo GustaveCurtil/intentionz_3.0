@@ -57,35 +57,28 @@ class PageController extends Controller
 
         //welk event?
         $event = Event::where('invitation_slug', $slug)->first();
+        if ($event === null) {
+            return redirect('/');
+        }
 
         //ben ik ingelogd?
         if ($user) {
-
-            //voeg mij toe aan invitation lijst met user_id
-            //redirect mij naar event?
+            $invitation = Invitation::where('event_id', $event->id)->where('user_id', $user->id)->first();
+            if (!$invitation) {
+                $inputs['event_id'] = $event->id;
+                $inputs['user_id'] = $user->id;
+                Invitation::create($inputs);
+            }
+            return redirect('/evenement/' . $event->id);
 
         } else {
 
-            //voeg mij toe aan invitation lijst met user_name
+            return view('evenement_prive', ['event' => $event]);
 
         }
 
-        //wie komt er en wie niet?
-        return view('evenement_prive', ['event' => $event, 'user' => $user]);
+        dd('plies vertel me hoe je op deze pagina bent geraakt: gustave.curtil@tutanota.com. REF: uitnodiging(slug)');
     }
-
-    // public function uitnodiging($slug)
-    // {
-    //     $user = User::where('id', auth()->guard()->id())->first();
-    //     $event = Event::where('invitation_slug', $slug)->firstOrFail();
-    //     $invitations = Invitation::where('event_id', $event->id)->get();
-
-    //     // Optionally, assign filtered invitations back to the event object if needed
-    //     $event->setRelation('invitations', $invitations);
-
-    //     return view('uitnodiging', ['event' => $event, 'user' => $user]);
-
-    // }
 
     public function login()
     {

@@ -11,47 +11,11 @@ use Illuminate\Support\Facades\Auth;
 class InvitationController extends Controller
 {
 
-    public function antwoordenOrigineel(Event $event, Request $request) {
-        $incomingFields = $request->validate([
-            'antwoord' => 'required', 
-            'koosnaam' => 'min:2'
-        ]);
-        $userId = auth()->guard()->id();
-        $userInvitation = Invitation::where('event_id', $event->id)
-        ->where('user_id', $userId)->first();
-
-        if($userInvitation) {
-            $userInvitation->going = $incomingFields['antwoord'];
-            $userInvitation->save();
-            return redirect()->back();
-        } else if($userId) {
-            dd('hoi');
-            $invitationData = [
-                'event_id' => $event->id, 
-                'user_id' => $userId, 
-                'going' =>  $incomingFields['antwoord']
-            ];
-        } else {
-            dd('hoi');
-            $invitationData = [
-                'event_id' => $event->id, 
-                'user_name' => $incomingFields['koosnaam'],
-                'going' =>  $incomingFields['antwoord'],
-            ];
-        }
-
-        
-        Invitation::create($invitationData);
-
-        return redirect()->back();
- 
-    }
-
     public function antwoorden(Event $event, Request $request) {
         $inputs = $request->validate([
+            'user_id' => 'nullable',
             'user_name' => 'nullable|min:2', 
             'going' => 'required', 
-            'user_id' => 'nullable'
         ]);
 
         $inputs['event_id'] = $event->id;
@@ -64,19 +28,15 @@ class InvitationController extends Controller
         }
 
         if ($user) {
-            $invitation = Invitation::where('user_event_id', $event->id)->where('invited_user_id', $user->id)->first();
+            $invitation = Invitation::where('event_id', $event->id)->where('user_id', $user->id)->first();
             if ($invitation) {
-                $invitation->invited_guest_name = $inputs['invited_guest_name'];
-                $invitation->going = $inputs['going'] = filter_var($request->input('going'), FILTER_VALIDATE_BOOLEAN);
+                $invitation->going = $inputs['going'];
                 $invitation->save();
             } else {
-                $inputs['invited_user_id'] = $user->id;
-                $inputs['going'] = filter_var($request->input('going'), FILTER_VALIDATE_BOOLEAN);
-
-                Invitation::create($inputs); 
+                dd('plies vertel me hoe je op deze pagina bent geraakt: gustave.curtil@tutanota.com. REF: antwoorden().moetuitnodigingnogopslaan?');
             }
 
-            return redirect('/' . $event->invitation_slug);
+            return redirect()->back();
         }
 
         //check of gekozen koosnaam niet al een bestaande gebruiker is
@@ -87,44 +47,25 @@ class InvitationController extends Controller
 
 
         $invitation = Invitation::where('event_id', $event->id)->where('user_name', $inputs['user_name'])->first();
-        $inputs['going'] = filter_var($request->input('going'), FILTER_VALIDATE_BOOLEAN);
         if ($invitation) {
             $invitation->going = $inputs['going'];
             $invitation->save();
         } else {
             Invitation::create($inputs); 
         }
-
-
-        return redirect('/uitnodiging/' . $event->invitation_slug);
+        return redirect()->back();
     }
 
+    
+    public function checkForInvitation($user, $eventId, $koosnaam) {
 
-    // public function inviteUser(Event $event, User $user) 
-    // {
-    //     $userId = auth()->guard()->id();
-    //     $eventSave = Save::where('user_id', $userId)
-    //     ->where('event_id', $event->id)->first();
+        $invitation = Invitation::where('event_id', $eventId)->where('user_name', $koosnaam);
+        if ($invitation) {
+            $invitation->user_id = $user->id;
+            $invitation->save();
+        }
+    }
 
-    //     if ($eventSave) {
-    //         if ($request->input('opslaan') === "opslaan") {
-    //             $eventSave->saved = true;
-    //         } else {
-    //             $eventSave->saved = false;
-    //         }
-    //         $eventSave->save();
-    //     } else {
-    //         $eventSave = Save::create([
-    //             'user_id' => $userId,
-    //             'event_id' => $event->id,
-    //             'saved' => true  // Assuming you're passing the Event model
-    //         ]);
-    //     }
+    
 
-    //     if($eventSave->saved) {
-    //         // return redirect()->back();  
-    //         return redirect('/overzicht');
-    //     }
-    //     return redirect('/');
-    // }
 }
