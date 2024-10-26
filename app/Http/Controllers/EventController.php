@@ -16,8 +16,8 @@ class EventController extends Controller
             'locatie_naam' => 'nullable|string|max:50',
             'datum' => 'required|date', // Ensures the field is a valid date if filled in
             'tijd' => 'required|date_format:H:i', // Field can be null, but must be in HH:MM format if provided
-            'beschrijving' => 'nullable|string|max:1000',
-            'foto' => 'nullable|file|mimes:jpg,jpeg,png|max:1069',
+            'beschrijving' => 'nullable|string|max:5000',
+            'foto' => 'nullable|file|mimes:jpg,jpeg,png|max:2500',
             'locatie_url' => 'nullable|url',
             'zoom' => 'Integer',
             'horizontaal' => 'Integer',
@@ -25,17 +25,17 @@ class EventController extends Controller
         ], [
             'titel.string' => 'De titel moet een string zijn.',
             'titel.max' => 'De titel mag maximaal 30 tekens bevatten.',
-            'titel.required' => 'titel is verplicht.',
-            'locatie_naam.required' => 'locatie naam is verplicht.',
+            'titel.required' => 'titel is vereist.',
+            'locatie_naam.required' => 'locatie naam is vereist.',
             'locatie_naam.string' => 'De locatie naam moet een string zijn.',
             'locatie_naam.max' => 'De locatie naam mag maximaal 30 tekens bevatten.',
             'datum.date' => 'De datum moet een geldige datum zijn.',
-            'datum.required' => 'datum is verplicht.',
-            'tijd.required' => 'Tijd is verplicht.',
+            'datum.required' => 'datum is vereist.',
+            'tijd.required' => 'Tijd is vereist.',
             'beschrijving.string' => 'De beschrijving moet een string zijn.',
-            'beschrijving.max' => 'De beschrijving kan max 1000 karakters bevatten.',
+            'beschrijving.max' => 'De beschrijving kan max 5000 karakters bevatten.',
             'foto.mimes' => 'De foto moet een bestand van het type jpg, jpeg of png zijn.',
-            'foto.max' => 'De foto mag maximaal 1 MB groot zijn.',
+            'foto.max' => 'De foto mag maximaal 2.5 MB groot zijn. (da is al veel zeneu)',
             'locatie_url.url' => 'De locatie URL moet een geldige URL zijn.'
         ]);
 

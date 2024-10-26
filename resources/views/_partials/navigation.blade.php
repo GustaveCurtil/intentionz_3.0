@@ -1,4 +1,3 @@
-<br>
 <a href="{{ route('publiek') }}">evenementen</a>
 @guest
     <a href="{{ route('login') }}">inloggen</a>

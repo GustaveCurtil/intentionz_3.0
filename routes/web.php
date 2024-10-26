@@ -8,6 +8,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\InvitationController;
 
 Route::get('/', [PageController::class, 'publiek'])->name('publiek');
+Route::get('/over', [PageController::class, 'over'])->name('over');
 Route::get('/login', [PageController::class, 'login'])->name('login')->middleware('guest');
 Route::get('/registreer', [PageController::class, 'registreer'])->name('registreer')->middleware('guest');
 

@@ -18,4 +18,8 @@
         @endif
     </section>
 
+    <script>
+        localStorage.clear();
+    </script>
+
 @endsection

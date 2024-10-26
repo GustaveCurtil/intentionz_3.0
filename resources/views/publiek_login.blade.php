@@ -15,7 +15,7 @@
         <input type="password" name="wachtwoord" id="wachtwoord" placeholder="wachtwoord" required>
         <input type="hidden" name="localEvents" id="localEvents">
         <input type="hidden" name="localKoosnaam" id="localKoosnaam">
-        <input type="submit" value="inloggen">
+        <input type="submit" value="yihaa">
     </form>
 
     @if(session('error'))
@@ -25,3 +25,4 @@
     @endif
 
 @endsection
+

@@ -38,9 +38,11 @@ class UserController extends Controller
 
         $inviteIds = json_decode($request->input('localEvents'));
         $koosnaam = $request->localKoosnaam;
-
-        foreach ($inviteIds as $inviteId) {
-            $this->checkForInvitation($inviteId, $koosnaam);   
+        if ($inviteIds) {
+            foreach ($inviteIds as $inviteId) {
+                $this->checkForInvitation($inviteId, $koosnaam);   
+            }
+            return ('/overzicht');
         }
 
         return redirect('/');
@@ -72,8 +74,10 @@ class UserController extends Controller
             //Invites die nog in localstorage staan toevoegen aan de collectie
             $inviteIds = json_decode($request->input('localEvents'));
             $koosnaam = json_decode($request->input('localKoosnaam'));
-            foreach ($inviteIds as $inviteId) {
-                $this->checkForInvitation($inviteId, $koosnaam);   
+            if ($inviteIds) {
+                foreach ($inviteIds as $inviteId) {
+                    $this->checkForInvitation($inviteId, $koosnaam);   
+                }
             }
 
             return redirect('/');

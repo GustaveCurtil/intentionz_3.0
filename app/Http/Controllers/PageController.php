@@ -97,6 +97,11 @@ class PageController extends Controller
         dd('plies vertel me hoe je op deze pagina bent geraakt: gustave.curtil@tutanota.com. REF: uitnodiging(slug)');
     }
 
+    public function over()
+    {
+        return view('publiek_over');
+    }
+
     public function login()
     {
         return view('publiek_login');

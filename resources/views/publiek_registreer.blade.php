@@ -7,9 +7,6 @@
 @endsection
 
 @section('main')
-    <figure id='registreren'>
-        <img src="media/fbisfree.png" alt="facebook says: it's free and always will be">
-    </figure>
     <h2>registreren</h2>
     <form action="register" method="post">
         @csrf
@@ -22,6 +19,9 @@
         <input type="submit" value="yihaa">
     </form>
     <br>
+    <figure id='registreren'>
+        <img src="media/fbisfree.png" alt="facebook says: it's free and always will be">
+    </figure>
 
     @if ($errors->any())
     <details><summary>foutmelding ({{ $errors->count() + 1 }})</summary>

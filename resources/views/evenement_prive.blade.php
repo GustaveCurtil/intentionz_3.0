@@ -8,7 +8,7 @@
     <figure id="poster">
         <img src="/storage/{{ $event->foto_pad }}" alt="poster voor het evenement:{{$event->titel}}" style="left: {{$event->horizontaal}}%; top: {{$event->verticaal}}%; transform: translate(-50%, -50%) scale({{ $event->zoom }}%);">
     </figure>
-    <h2>{{ $event->titel }} <small>(openbaar)</small></h2>  
+    <h2>{{ $event->titel }} <small>(uitnodiging)</small></h2>  
     <p>{{ $event->datum->format('d F Y') }} om {{ $event->tijd->format('H:i') }}</p>
     <p>georganiseerd door {{ $event->user->name }}</p>
     <p>{!! nl2br(e($event->beschrijving)) !!}</p>
@@ -44,7 +44,7 @@
     @if (isset($user) && $event->user_id === $user->id)
 
     <section>
-        <p onclick="inviteLink('{{ url('/uitnodiging/' . $event->invitation_slug) }}')">{{ url('/uitnodiging/' . $event->invitation_slug) }}</p>
+        <p onclick="inviteLink('{{ url('/uitnodiging/' . $event->invitation_slug) }}')"><u>{{ url('/uitnodiging/' . $event->invitation_slug) }}</u></p>
         <a>evenement aanpassen</a>
     </section>
 
@@ -54,7 +54,8 @@
         <form action="/antwoorden/{{ $event->id }}" method="post">
             @csrf
             @if (!isset($user))
-            <input type="text" name="user_name" id="user_name" placeholder="Wie bent ge?">
+            <input type="text" name="user_name" id="user_name" placeholder="Wie bent ge?" value="{{old('user_name')}}">
+            <input type="hidden" name="vorige_naam" id="vorige_naam" value="{{old('user_name')}}">
             @endif
             <button name="going" value="1">gaan</button>
             <button name="going" value="0">niet gaan</button>
@@ -91,7 +92,7 @@ function inviteLink(link) {
         let naam;
 
         if (localStorage.getItem('koosnaam')) {
-            naamVeld.value = localStorage.getItem('koosnaam');
+            // naamVeld.value = localStorage.getItem('koosnaam');
         } else {
             localStorage.setItem('koosnaam', "")
         }
@@ -100,6 +101,8 @@ function inviteLink(link) {
             naam = naamVeld.value;
             localStorage.setItem('koosnaam', naam);
         })
+
+        console.log({{ old('user_name') }})
 
 
         // If 'events' is not present in localStorage, initialize it as an empty array

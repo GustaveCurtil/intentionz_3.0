@@ -16,6 +16,7 @@ class InvitationController extends Controller
             'user_id' => 'nullable',
             'user_name' => 'nullable|min:2', 
             'going' => 'required', 
+            'vorige_naam' => 'nullable'
         ]);
 
         $inputs['event_id'] = $event->id;
@@ -46,14 +47,22 @@ class InvitationController extends Controller
         }
 
 
-        $invitation = Invitation::where('event_id', $event->id)->where('user_name', $inputs['user_name'])->first();
+        $invitationSame = Invitation::where('event_id', $event->id)->where('user_name', $inputs['user_name'])->first();
+        $invitationChange = Invitation::where('event_id', $event->id)->where('user_name', $inputs['vorige_naam'])->first();
+        $invitation = $invitationSame ?: $invitationChange;
         if ($invitation) {
             $invitation->going = $inputs['going'];
+            $invitation->user_name = $inputs['user_name'];
             $invitation->save();
         } else {
-            Invitation::create($inputs); 
+
+            Invitation::create([
+                'user_name' => $inputs['user_name'],
+                'event_id'  => $event->id,
+                'going'     => $inputs['going'],
+            ]); 
         }
-        return redirect()->back();
+        return redirect()->back()->withInput();
     }
     
 

@@ -9,20 +9,33 @@
     @yield('head')
 </head>
 <body>
+
     <header>
         <h1>intentionz_3.0</h1>
-        <cite>FORM follows CSS follow DEVICE follows HTML follows PHP follows FUNCTION</cite></h2>
         <nav>@include('_partials.navigation')</nav>
-    </header>
+    </header>  
+
     <main>
         @yield('main')
     </main>
+    <br>
     <hr>
     <footer>
-    @auth
-    <p>je bent ingelogd als {{ auth()->user()->name }}</p>      
-    @endauth
-    <p>alle feedback welkom → gustave.curtil@tutanota.com</p>
-    <p>aantal broeders en zusters met een login: {{ $totalUsers }}/100 <progress max="100" value="{{ $totalUsers }}">{{ $totalUsers }}/100</progress></p>
+        <p>
+        @auth
+        je bent ingelogd als <strong>{{ auth()->user()->name }}</strong> ☺      
+        @endauth
+        <a href="/over">over</a> ☺ feedback naar <u onclick="copyMail('gustave.curtil@tutanota.com')">gustave.curtil@tutanota.com</u> ☺ aantal broeders en zusters met een login: <strong>{{ $totalUsers }}/100</strong>
+        <meter min="0" max="100" value="{{ $totalUsers }}">{{ $totalUsers }}</meter></p>
     </footer>
+    <script>
+        function copyMail(link) {
+            navigator.clipboard.writeText(link).then(() => {
+                alert("♥ mail is gekopieerd ❀");
+            }).catch(err => {
+                console.error("Failed to copy: ", err);
+                alert("Failed to copy the link.");
+            });
+        }
+    </script>
 </body>
