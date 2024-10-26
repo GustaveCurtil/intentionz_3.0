@@ -1,8 +1,8 @@
 let sliderZoom = document.querySelector('#zoom');
 let sliderHorizontaal = document.querySelector('#horizontaal');
 let sliderVerticaal = document.querySelector('#verticaal');
-let fotokader = document.querySelector('#voorvertoning')
-let foto = document.querySelector('#voorvertoning img')
+let fotokader = document.querySelector('#poster')
+let foto = document.querySelector('#poster img')
 
 let uploadButton = document.querySelector('input[type="file"]');
 uploadButton.addEventListener('change', (e)=>{

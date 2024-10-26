@@ -1,12 +1,14 @@
 @extends('_layouts.head')
 
+@section('title', 'editor')
+
 @section('head')
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <script src="{{ asset('js/editor.js') }}" defer></script>
 @endsection
 
 @section('main')
-    <h2>evenement aanpassen</h2>
+    <h2>editor</h2>
     <figure id="voorvertoning"><img src="/storage/{{ $event->foto_pad}}" style="left: {{$event->horizontaal}}%; top: {{$event->verticaal}}%; transform: translate(-50%, -50%) scale({{ $event->zoom }}%);"></img></figure>
     <form action="create-event" method="post" enctype="multipart/form-data">
         @csrf

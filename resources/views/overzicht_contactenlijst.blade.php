@@ -1,5 +1,7 @@
 @extends('_layouts.head')
 
+@section('title', 'contactenlijst')
+
 @section('main')
     <h2>bestaande gebruikers</h2>
     <p>(tijdelijke optie voor debugg'en enzo)</p>

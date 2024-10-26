@@ -1,18 +1,17 @@
 @extends('_layouts.head')
 
-@section('head')
-<link rel="stylesheet" href="{{ asset('css/poster.css') }}">
-@endsection
+@section('title', $event->titel)
 
 @section('main')
 
-    <section>
-        <h2>{{ $event->titel }} (publiek)</h2>    
-        <figure>
+    <section>  
+        <figure id="poster">
             <img src="/storage/{{ $event->foto_pad }}" alt="poster voor het evenement:{{$event->titel}}" style="left: {{$event->horizontaal}}%; top: {{$event->verticaal}}%; transform: translate(-50%, -50%) scale({{ $event->zoom }}%);">
         </figure>
-        <p>{{ $event->datum }} om {{ $event->tijd }}</p>
-        <p>{{ $event->beschrijving }}</p>
+        <h2>{{ $event->titel }} <small>(openbaar)</small></h2>  
+        <p>{{ $event->datum->format('l d F Y') }} om {{ $event->tijd->format('H:i') }}</p>
+        <p>georganiseerd door {{ $event->user->name }}</p>
+        <p>{!! nl2br(e($event->beschrijving)) !!}</p>
     </section>
     
     @auth

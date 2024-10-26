@@ -12,13 +12,21 @@ class PageController extends Controller
 {
     public function publiek()
     {
+        $userId = auth()->guard()->id();
+
         $events = Event::where('publiek', true)
         ->with('user')
+        ->with(['saves' => function ($query) use ($userId) {
+            $query->where('user_id', $userId); // This filters saves for the authenticated user
+        }])
         ->orderBy('datum', 'asc')  // Ascending order for date
         ->orderBy('tijd', 'asc')   // Ascending order for time
         ->get();
 
-        return view('publiek_', compact('events'));
+
+        $laatsteEvent = Event::where('publiek', true)->orderBy('updated_at', 'desc')->first();
+
+        return view('publiek_', ['events' => $events, 'laatsteEvent' => $laatsteEvent]);
     }
 
     public function event(Event $event)
@@ -108,12 +116,18 @@ class PageController extends Controller
         ->with('user')
         ->get();
 
+        //uitgenodigde events
+        $eventsInvited = Invitation::where('user_id', $userId)
+        ->with('event')
+        ->get()
+        ->pluck('event');
+
         //Opgeslagen evenementen
         $saves = Save::where('user_id', $userId)->where('saved', true)->get();
         $eventsSaved = $saves->pluck('event');
 
         //VERZAMELEN VAN EVENEMENTEN
-        $eventsAll = $eventsMy->merge($eventsSaved);
+        $eventsAll = $eventsMy->merge($eventsSaved)->merge($eventsInvited);
         $events = $eventsAll->sortBy([
             ['datum', 'asc'],
             ['tijd', 'asc'], 

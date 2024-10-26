@@ -1,13 +1,19 @@
 @extends('_layouts.head')
 
+@section('title', 'overzicht')
+
 @section('main')
     <h2>jouw overzicht</h2>
     <section>
         @if ($events->isEmpty())
-        <p>Er zijn momenteel geen publieke evenementen.</p>
+        <p>geen evenementen</p>
         @else
         @foreach ($events as $event)
-            <a href="/evenement/{{ $event->id }}">{{ $event->titel }} - {{ $event->datum }} om {{ $event->tijd }} | {{ $event->user->name }}</a><br>
+        @if ($event->publiek)
+        <p><a href="/evenement/{{ $event->id }}">{{ $event->datum->format('d/m/Y') }} {{ $event->tijd->format('H:i') }} | <strong>{{ $event->titel }}</strong> - {{ $event->user->name }}</a> ☼</p>
+        @else
+        <p><a href="/evenement/{{ $event->id }}">{{ $event->datum->format('d/m/Y') }} {{ $event->tijd->format('H:i') }} | <strong>{{ $event->titel }}</strong> - {{ $event->user->name }}</a> ⌂</p>
+        @endif
         @endforeach
         @endif
     </section>

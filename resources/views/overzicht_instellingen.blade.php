@@ -1,5 +1,7 @@
 @extends('_layouts.head')
 
+@section('title', 'instellingen')
+
 @section('head')
     <meta name="description" content="instellingen">
     <link rel="stylesheet" href="{{ asset('css/editor.css') }}">

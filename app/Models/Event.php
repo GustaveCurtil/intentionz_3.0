@@ -25,7 +25,8 @@ class Event extends Model
     // Specify casting for specific columns
     protected $casts = [
         'datum' => 'date',        // Casting the 'datum' field as a date       // Casting the 'tijd' field as time
-        'publiek' => 'boolean',   // Casting 'publiek' as boolean
+        'publiek' => 'boolean',
+        'tijd' => 'datetime:H:i',
     ];
 
     public function user()
@@ -50,6 +51,6 @@ class Event extends Model
 
     public function saves()
     {
-        return $this->hasMany(Event::class);
+        return $this->hasMany(Save::class, 'event_id');
     }
 }

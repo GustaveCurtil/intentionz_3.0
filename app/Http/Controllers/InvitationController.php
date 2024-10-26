@@ -55,17 +55,6 @@ class InvitationController extends Controller
         }
         return redirect()->back();
     }
-
-    
-    public function checkForInvitation($user, $eventId, $koosnaam) {
-
-        $invitation = Invitation::where('event_id', $eventId)->where('user_name', $koosnaam);
-        if ($invitation) {
-            $invitation->user_id = $user->id;
-            $invitation->save();
-        }
-    }
-
     
 
 }
